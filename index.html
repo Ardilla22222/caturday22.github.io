@@ -19,13 +19,15 @@
 </head>
 <body>
 
-  <h1>Caturday 22</h1>
+  <h1>Caturday</h1>
   <div id="contador">Cargando...</div>
 
   <script>
-    // Fecha final: 90 días desde ahora
-    const fechaInicio = new Date();
-    const fechaFinal = new Date(fechaInicio.getTime() + 90 * 24 * 60 * 60 * 1000);
+    // FECHA FIJA DE INICIO (por ejemplo, 17 de julio de 2025 a las 00:00)
+    const fechaInicioFija = new Date("2025-07-15T00:00:00");
+
+    // Fecha final = fecha fija + 90 días
+    const fechaFinal = new Date(fechaInicioFija.getTime() + 90 * 24 * 60 * 60 * 1000);
 
     function actualizarContador() {
       const ahora = new Date();
@@ -51,3 +53,4 @@
 
 </body>
 </html>
+
