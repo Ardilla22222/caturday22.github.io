@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caturday Sodas</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      color: #fff;
+    }
+
+    /* Texto repetido tipo marca */
+    .marca {
+      position: fixed;
+      width: 100%;
+      text-align: center;
+      font-size: 22px;
+      letter-spacing: 4px;
+      color: #444;
+      user-select: none;
+      pointer-events: none;
+      text-transform: uppercase;
+    }
+
+    .top { top: 10px; }
+    .bottom { bottom: 10px; }
+
+    .left {
+      left: -120px;
+      top: 50%;
+      transform: rotate(-90deg);
+    }
+
+    .right {
+      right: -140px;
+      top: 50%;
+      transform: rotate(90deg);
+    }
+
+    /* Imagen centrada y larga */
+    .contenedor-imagen {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .imagen-rectangulo {
+      height: 90vh;        /* Ajusta alto visible */
+      width: auto;         /* Mantiene proporción */
+      display: block;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Texto alrededor -->
+  <div class="marca top">Caturday Sodas • Caturday Sodas • Caturday Sodas</div>
+  <div class="marca bottom">Caturday Sodas • Caturday Sodas • Caturday Sodas</div>
+  <div class="marca left">Caturday Sodas • Caturday Sodas • Caturday Sodas</div>
+  <div class="marca right">Caturday Sodas • Caturday Sodas • Caturday Sodas</div>
+
+  <!-- Imagen principal centrada -->
+  <a href="https://xxxx/" target="_blank">
+    <div class="contenedor-imagen">
+      <img src="Caturday sodas 22 CCT1.png" class="imagen-rectangulo" alt="Caturday Sodas">
+    </div>
+  </a>
+
+</body>
+</html>
