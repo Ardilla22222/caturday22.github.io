@@ -8,11 +8,8 @@
   <title>Caturday 22</title>
   <style>
     :root {
-      --bg: #000;
-      --text: #fff;
-      --card-bg: #111;
-      --card-hover: #222;
-      --border: #444;
+      --bg: #fff;
+      --text: #000;
     }
 
     body {
@@ -40,6 +37,7 @@
       font-size: clamp(28px, 6vw, 60px);
       margin-bottom: 40px;
       font-weight: bold;
+      color: var(--text);
     }
 
     .grid {
@@ -50,25 +48,16 @@
       max-width: 900px;
     }
 
-    .caja-link {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 120px;
-      background-color: var(--card-bg);
-      border: 2px solid var(--border);
+    .caja-img {
+      width: 100%;
       border-radius: 12px;
-      color: var(--text);
-      font-size: 24px;
-      text-decoration: none;
-      transition: background-color 0.3s, transform 0.15s;
+      transition: transform 0.15s, box-shadow 0.2s;
       cursor: pointer;
-      user-select: none;
     }
 
-    .caja-link:hover {
-      background-color: var(--card-hover);
+    .caja-img:hover {
       transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
   </style>
 </head>
@@ -78,28 +67,28 @@
   <div id="contador" aria-live="polite">Cargando...</div>
 
   <div class="grid">
-    <a href="1.html" class="caja-link">C 01</a>
-    <a href="2.html" class="caja-link">C 02</a>
-    <a href="3.html" class="caja-link">C 03</a>
-    <a href="4.html" class="caja-link">C 04</a>
-    <a href="5.html" class="caja-link">C 05</a>
-    <a href="6.html" class="caja-link">C 06</a>
-    <a href="7.html" class="caja-link">C 07</a>
-    <a href="8.html" class="caja-link">C 08</a>
-    <a href="9.html" class="caja-link">C 09</a>
-    <a href="10.html" class="caja-link">C 10</a>
-    <a href="11.html" class="caja-link">C 11</a>
-    <a href="12.html" class="caja-link">C 12</a>
-    <a href="13.html" class="caja-link">C 13</a>
-    <a href="14.html" class="caja-link">C 14</a>
-    <a href="15.html" class="caja-link">C 15</a>
-    <a href="16.html" class="caja-link">C 16</a>
-    <a href="17.html" class="caja-link">C 17</a>
-    <a href="18.html" class="caja-link">C 18</a>
-    <a href="19.html" class="caja-link">C 19</a>
-    <a href="20.html" class="caja-link">C 20</a>
-    <a href="21.html" class="caja-link">C 21</a>
-    <a href="22.html" class="caja-link">Sodas 22</a>
+    <a href="1.html"><img src="boton01.jpg" class="caja-img"></a>
+    <a href="2.html"><img src="boton02.jpg" class="caja-img"></a>
+    <a href="2.html"><img src="boton03.jpg" class="caja-img"></a>
+    <a href="4.html"><img src="boton04.jpg" class="caja-img"></a>
+    <a href="5.html"><img src="boton05.jpg" class="caja-img"></a>
+    <a href="6.html"><img src="boton06.jpg" class="caja-img"></a>
+    <a href="7.html"><img src="boton07.jpg" class="caja-img"></a>
+    <a href="8.html"><img src="boton08.jpg" class="caja-img"></a>
+    <a href="9.html"><img src="boton09.jpg" class="caja-img"></a>
+    <a href="10.html"><img src="boton10.jpg" class="caja-img"></a>
+    <a href="11.html"><img src="boton11.jpg" class="caja-img"></a>
+    <a href="12.html"><img src="boton12.jpg" class="caja-img"></a>
+    <a href="13.html"><img src="boton13.jpg" class="caja-img"></a>
+    <a href="14.html"><img src="boton14.jpg" class="caja-img"></a>
+    <a href="15.html"><img src="boton15.jpg" class="caja-img"></a>
+    <a href="16.html"><img src="boton16.jpg" class="caja-img"></a>
+    <a href="17.html"><img src="boton17.jpg" class="caja-img"></a>
+    <a href="18.html"><img src="boton18.jpg" class="caja-img"></a>
+    <a href="19.html"><img src="boton19.jpg" class="caja-img"></a>
+    <a href="20.html"><img src="boton20.jpg" class="caja-img"></a>
+    <a href="21.html"><img src="boton21.jpg" class="caja-img"></a>
+    <a href="22.html"><img src="boton22.jpg" class="caja-img"></a>
   </div>
 
   <script>
@@ -139,4 +128,3 @@
 
 </body>
 </html>
-
