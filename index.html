@@ -20,27 +20,45 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       min-height: 100vh;
       margin: 0;
       padding: 20px;
       text-align: center;
+      gap: 20px;
     }
 
-    h1 {
-      font-size: 48px;
+    /* Imagen del título */
+    #titulo-img {
+      width: 320px;
+      max-width: 80%;
+      margin-top: 10px;
+    }
+
+    /* Contenedor del cronómetro con imagen de fondo */
+    #cronometro-box {
+      position: relative;
+      width: 280px;
+      aspect-ratio: 3 / 1;
+      background-image: url("timer.png");
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin-bottom: 20px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
     }
 
     #contador {
-      font-size: clamp(28px, 6vw, 60px);
-      margin-bottom: 40px;
+      position: absolute;
+      font-size: 28px;
       font-weight: bold;
-      color: var(--text);
+      color: #000;
+      text-shadow: 1px 1px 3px #fff;
     }
 
+    /* Grid de botones */
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -65,9 +83,15 @@
 
 <body>
 
-  <h1>Caturday</h1>
-  <div id="contador" aria-live="polite">Cargando...</div>
+  <!-- Imagen en vez de título -->
+  <img id="titulo-img" src="titulo.png">
 
+  <!-- Cronómetro dentro de una imagen rectangular -->
+  <div id="cronometro-box">
+    <div id="contador">Cargando...</div>
+  </div>
+
+  <!-- Botones -->
   <div class="grid">
     <a href="1.html"><img src="Boton01.png" class="caja-img"></a>
     <a href="2.html"><img src="Boton02.png" class="caja-img"></a>
@@ -129,4 +153,4 @@
   </script>
 
 </body>
-</html>
+</html
