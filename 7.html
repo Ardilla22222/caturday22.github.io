@@ -31,8 +31,7 @@
 
     .pdf-container {
       width: 100%;
-      height: calc(100vh - 140px);
-      display: none;
+      height: 80vh; /* más seguro en móviles */
     }
 
     iframe {
@@ -62,6 +61,16 @@
       padding: 12px;
       color: #555;
     }
+
+    /* Media queries para móviles */
+    @media (max-width: 768px) {
+      .pdf-container {
+        display: none;
+      }
+      .mobile-link {
+        display: block;
+      }
+    }
   </style>
 </head>
 
@@ -69,32 +78,22 @@
 
   <div class="header">
     <h1>C A T U R D A Y  2 2 — 7</h1>
-    <h2>ANTERIOR AL ARTE</h2>
+    <h2> "ANTERIOR AL ARTE" </h2>
   </div>
 
   <!-- Desktop -->
-  <div class="pdf-container" id="desktopPdf">
+  <div class="pdf-container">
     <iframe src="227.pdf"></iframe>
   </div>
 
   <!-- Mobile -->
-  <div class="mobile-link" id="mobilePdf">
+  <div class="mobile-link">
     <a href="227.pdf" target="_blank">Ver documento (PDF)</a>
   </div>
 
   <div class="footer">
     © 2026 Caturday22
   </div>
-
-  <script>
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-    if (isMobile) {
-      document.getElementById("mobilePdf").style.display = "block";
-    } else {
-      document.getElementById("desktopPdf").style.display = "block";
-    }
-  </script>
 
 </body>
 </html>
