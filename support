@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support Caturday</title>
+
+<style>
+body{
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    background:#111;
+    color:white;
+    text-align:center;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:20px;
+}
+
+img{
+    width:100%;
+    height:auto;
+    border-radius:10px;
+}
+
+.donate-box{
+    margin-top:30px;
+}
+
+.donate-button{
+    display:inline-block;
+    padding:15px 30px;
+    font-size:20px;
+    background:#0070ba;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+    transition:0.3s;
+}
+
+.donate-button:hover{
+    background:#005ea6;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Support Caturday</h1>
+
+<img src="donate.jpg" alt="Support Caturday">
+
+<div class="donate-box">
+<a class="donate-button" href="https://www.paypal.com/donate/YOUR_LINK_HERE" target="_blank">
+Donate with PayPal
+</a>
+</div>
+
+</div>
+
+</body>
+</html>
