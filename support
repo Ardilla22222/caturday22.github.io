@@ -57,7 +57,7 @@ img{
 <img src="donate.jpg" alt="Support Caturday">
 
 <div class="donate-box">
-<a class="donate-button" href="https://www.paypal.com/donate/YOUR_LINK_HERE" target="_blank">
+<a class="donate-button" href="https://www.paypal.com/donate/?hosted_button_id=PYVSNY3YRUF9N" target="_blank">
 Donate with PayPal
 </a>
 </div>
