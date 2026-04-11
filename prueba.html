@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Caturday 22</title>
+
+<style>
+    body {
+        margin: 0;
+        background: #f4f4ef;
+        font-family: "Courier New", monospace;
+        color: #111;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: auto;
+        padding: 60px 20px;
+    }
+
+    h1, h2 {
+        text-align: center;
+        font-weight: normal;
+        letter-spacing: 4px;
+    }
+
+    h2 {
+        margin-bottom: 40px;
+    }
+
+    p {
+        max-width: 600px;
+        margin: 0 auto 20px auto;
+        text-align: justify;
+        font-size: 14px;
+    }
+
+    /* COLLAGE BASE (DESKTOP) */
+    .collage {
+        position: relative;
+        margin-top: 80px;
+        height: 1200px;
+    }
+
+    .collage img {
+        position: absolute;
+        width: 220px;
+        object-fit: cover;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        transition: transform 0.3s ease;
+    }
+
+    .collage img:active {
+        transform: scale(1.05);
+        z-index: 10;
+    }
+
+    .img1 { top: 0; left: 5%; transform: rotate(-5deg); }
+    .img2 { top: 120px; right: 10%; transform: rotate(3deg); }
+    .img3 { top: 300px; left: 20%; transform: rotate(8deg); }
+    .img4 { top: 450px; right: 5%; width: 280px; transform: rotate(-4deg); }
+    .img5 { top: 650px; left: 10%; transform: rotate(6deg); }
+    .img6 { top: 850px; right: 15%; transform: rotate(-7deg); }
+
+    .note {
+        position: absolute;
+        font-size: 11px;
+        opacity: 0.6;
+    }
+
+    .note1 { top: 280px; right: 20%; }
+    .note2 { top: 780px; left: 30%; }
+
+    .footer {
+        margin-top: 150px;
+        text-align: center;
+        font-size: 12px;
+        opacity: 0.6;
+    }
+
+    /* 📱 MOBILE FIX REAL */
+    @media (max-width: 768px) {
+
+        .container {
+            padding: 40px 15px;
+        }
+
+        h1 {
+            font-size: 18px;
+        }
+
+        h2 {
+            font-size: 16px;
+        }
+
+        p {
+            font-size: 13px;
+        }
+
+        .collage {
+            position: static;
+            height: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .collage img {
+            position: relative;
+            width: 100%;
+            transform: none !important;
+        }
+
+        /* rompe la grilla para efecto collage */
+        .img1 { grid-column: span 2; }
+        .img4 { grid-column: span 2; }
+        .img5 { transform: rotate(3deg); }
+        .img6 { transform: rotate(-3deg); }
+
+        .note {
+            position: static;
+            font-size: 10px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .footer {
+            margin-top: 80px;
+        }
+    }
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>C A T U R D A Y  2 2</h1>
+    <h2>“ E X T E R N A L I D A D ”</h2>
+
+    <p>
+    La serie se construye sobre soportes descartados: cartones de cajas de pizza,
+    superficies marcadas por grasa, dobleces y tránsito.
+    </p>
+
+    <p>
+    Aquello que queda fuera del cálculo económico reaparece brevemente en los muros.
+    </p>
+
+    <div class="collage">
+
+        <img src="image_1.png" class="img1">
+        <img src="image_2.png" class="img2">
+        <img src="image_3.png" class="img3">
+        <img src="image_4.png" class="img4">
+        <img src="image_5.png" class="img5">
+        <img src="image_6.png" class="img6">
+
+        <div class="note note1">externalidad visible</div>
+        <div class="note note2">no está hecho para durar</div>
+
+    </div>
+
+    <div class="footer">
+        © 2026 Caturday22 — "algo que parece anterior al arte.. y posterior a él"
+    </div>
+
+</div>
+
+</body>
+</html>
