@@ -4,131 +4,91 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Caturday 22</title>
+<title>Caturday 22 - Externalidad</title>
 
 <style>
     body {
         margin: 0;
-        background: #f4f4ef;
+        background: #e9e9e4;
         font-family: "Courier New", monospace;
         color: #111;
     }
 
-    .container {
-        max-width: 900px;
-        margin: auto;
-        padding: 60px 20px;
+    .page {
+        max-width: 800px;
+        margin: 0 auto;
+        background: #fdfdf9;
+        padding: 60px 40px;
+        box-shadow: 0 0 30px rgba(0,0,0,0.1);
     }
 
-    h1, h2 {
+    /* TITULOS */
+
+    .title {
         text-align: center;
-        font-weight: normal;
-        letter-spacing: 4px;
+        letter-spacing: 6px;
+        font-size: 16px;
+        margin-bottom: 10px;
     }
 
-    h2 {
-        margin-bottom: 40px;
+    .subtitle {
+        text-align: center;
+        letter-spacing: 4px;
+        font-size: 14px;
+        margin-bottom: 50px;
     }
+
+    /* TEXTO */
 
     p {
-        max-width: 600px;
-        margin: 0 auto 20px auto;
-        text-align: justify;
         font-size: 14px;
+        line-height: 1.8;
+        margin-bottom: 25px;
+        text-align: justify;
     }
 
-    /* COLLAGE BASE (DESKTOP) */
-    .collage {
-        position: relative;
-        margin-top: 80px;
-        height: 1200px;
+    /* IMAGENES GRANDES */
+
+    .image-full {
+        width: 100%;
+        margin: 50px 0;
     }
 
-    .collage img {
-        position: absolute;
-        width: 220px;
-        object-fit: cover;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        transition: transform 0.3s ease;
+    .image-full img {
+        width: 100%;
+        height: auto;
+        display: block;
     }
 
-    .collage img:active {
-        transform: scale(1.05);
-        z-index: 10;
-    }
-
-    .img1 { top: 0; left: 5%; transform: rotate(-5deg); }
-    .img2 { top: 120px; right: 10%; transform: rotate(3deg); }
-    .img3 { top: 300px; left: 20%; transform: rotate(8deg); }
-    .img4 { top: 450px; right: 5%; width: 280px; transform: rotate(-4deg); }
-    .img5 { top: 650px; left: 10%; transform: rotate(6deg); }
-    .img6 { top: 850px; right: 15%; transform: rotate(-7deg); }
-
-    .note {
-        position: absolute;
-        font-size: 11px;
-        opacity: 0.6;
-    }
-
-    .note1 { top: 280px; right: 20%; }
-    .note2 { top: 780px; left: 30%; }
+    /* FOOTER */
 
     .footer {
-        margin-top: 150px;
-        text-align: center;
+        margin-top: 60px;
         font-size: 12px;
+        text-align: center;
         opacity: 0.6;
     }
 
-    /* 📱 MOBILE FIX REAL */
+    /* 📱 MOBILE */
+
     @media (max-width: 768px) {
 
-        .container {
-            padding: 40px 15px;
+        .page {
+            padding: 40px 20px;
+            box-shadow: none;
         }
 
-        h1 {
-            font-size: 18px;
+        .title {
+            font-size: 14px;
+            letter-spacing: 4px;
         }
 
-        h2 {
-            font-size: 16px;
+        .subtitle {
+            font-size: 13px;
         }
 
         p {
             font-size: 13px;
-        }
-
-        .collage {
-            position: static;
-            height: auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 40px;
-        }
-
-        .collage img {
-            position: relative;
-            width: 100%;
-            transform: none !important;
-        }
-
-        /* rompe la grilla para efecto collage */
-        .img1 { grid-column: span 2; }
-        .img4 { grid-column: span 2; }
-        .img5 { transform: rotate(3deg); }
-        .img6 { transform: rotate(-3deg); }
-
-        .note {
-            position: static;
-            font-size: 10px;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        .footer {
-            margin-top: 80px;
         }
     }
 
@@ -138,33 +98,36 @@
 
 <body>
 
-<div class="container">
+<div class="page">
 
-    <h1>C A T U R D A Y  2 2</h1>
-    <h2>“ E X T E R N A L I D A D ”</h2>
+    <div class="title">C A T U R D A Y  2 2 - 1</div>
+    <div class="subtitle">“ E X T E R N A L I D A D ”</div>
 
-    <p>
-    La serie se construye sobre soportes descartados: cartones de cajas de pizza,
-    superficies marcadas por grasa, dobleces y tránsito.
-    </p>
-
-    <p>
-    Aquello que queda fuera del cálculo económico reaparece brevemente en los muros.
-    </p>
-
-    <div class="collage">
-
-        <img src="image_1.png" class="img1">
-        <img src="image_2.png" class="img2">
-        <img src="image_3.png" class="img3">
-        <img src="image_4.png" class="img4">
-        <img src="image_5.png" class="img5">
-        <img src="image_6.png" class="img6">
-
-        <div class="note note1">externalidad visible</div>
-        <div class="note note2">no está hecho para durar</div>
-
+    <!-- IMAGEN GRANDE -->
+    <div class="image-full">
+        <img src="image_1.png" alt="">
     </div>
+
+    <p>
+    La serie se construye sobre soportes descartados: cartones de cajas de pizza, superficies marcadas por grasa, dobleces y tránsito. Sobre ellos aparecen animales pintados en acuarela con un trazo deliberadamente frágil, casi provisional.
+    </p>
+
+    <p>
+    La elección del material no es neutra. Estos residuos de consumo inmediato se convierten en paisaje para figuras que suelen ser tratadas como cifras, costos o daños colaterales dentro de modelos de explotación del territorio. La obra toma prestado el término externalidad de la economía para invertirlo: aquello que se excluye del cálculo reaparece aquí como imagen.
+    </p>
+
+    <!-- OTRA IMAGEN GRANDE -->
+    <div class="image-full">
+        <img src="image_2.png" alt="">
+    </div>
+
+    <p>
+    La baja permanencia del soporte y la técnica funciona como una condición: aceptar que esto no está hecha para durar.
+    </p>
+
+    <p>
+    Aquello que queda fuera del cálculo económico reaparece brevemente en los muros, expuesto a ser removido, borrado o ignorado.
+    </p>
 
     <div class="footer">
         © 2026 Caturday22 — "algo que parece anterior al arte.. y posterior a él"
