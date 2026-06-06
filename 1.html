@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>"Externalidad"</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background: linear-gradient(180deg, #0d0b0d 0%, #1a0f1a 100%);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    .container {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+    .imagenes {
+      width: 75%;
+      overflow-y: auto;
+      padding: 1rem;
+      scrollbar-width: thin;
+      scrollbar-color: #444 #1a0f1a;
+    }
+    .imagenes::-webkit-scrollbar {
+      width: 6px;
+    }
+    .imagenes::-webkit-scrollbar-thumb {
+      background-color: #444;
+      border-radius: 3px;
+    }
+    .imagenes figure {
+      margin: 0 0 1.5rem 0;
+      text-align: center;
+    }
+    .imagenes img {
+      max-width: 95%;
+      height: auto;
+      border: 1px solid #333;
+      transition: transform 0.3s ease;
+    }
+    .imagenes img:hover {
+      transform: scale(1.02);
+    }
+    .texto {
+      width: 25%;
+      overflow-y: auto;
+      padding: 2rem;
+      font-size: 12px;
+      line-height: 1.6;
+      scrollbar-width: thin;
+      scrollbar-color: #444 #0d0b0d;
+    }
+    .texto::-webkit-scrollbar {
+      width: 6px;
+    }
+    .texto::-webkit-scrollbar-thumb {
+      background-color: #444;
+      border-radius: 3px;
+    }
+    .texto h1 {
+      font-size: 22px;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    footer {
+      text-align: center;
+      color: #aaa;
+      font-size: 12px;
+      padding: 1rem;
+      border-top: 1px solid #333;
+    }
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .imagenes, .texto {
+        width: 100%;
+        height: auto;
+      }
+      .texto {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- a la izq imagenes -->
+    <div class="imagenes">
+      <figure><img src="imagenes/externalidad1.jpg" alt=" "></figure>
+      <figure><img src="imagenes/externalidad2.jpg" alt=" "></figure>
+      <figure><img src="imagenes/externalidad2.jpg" alt=" "></figure>
+      <figure><img src="imagenes/externalidad2.jpg" alt=" "></figure>
+      <figure><img src="imagenes/externalidad2.jpg" alt=" "></figure>
+      <figure><img src="imagenes/externalidad2.jpg" alt=" "></figure>
+      <figure><img src="imagenes/externalidad2.jpg" alt=" "></figure>
+      <figure><img src="imagenes/externalidad2.jpg" alt=" "></figure>
+      <figure><img src="imagenes/externalidad2.jpg" alt=" "></figure>
+      <figure><img src="imagenes/externalidad2.jpg" alt=" "></figure>
+      <figure><img src="imagenes/externalidad2.jpg" alt=" "></figure>
+      <figure><img src="imagenes/externalidad2.jpg" alt=" "></figure>
+      <figure><img src="imagenes/externalidad2.jpg" alt=" "></figure>
+      
+      <!-- agregar por cada imagen que quiera poner  -->
+    </div>
+
+    <!-- a la derecha puedo escribir el texto que necesite -->
+    <div class="texto">
+      <h1>"EXTERNALIDAD"</h1>
+      <p>
+        La serie se construye sobre soportes descartados: cartones de cajas de pizza, superficies marcadas por grasa, dobleces y tránsito. 
+        Sobre ellos aparecen animales pintados en acuarela con un trazo deliberadamente frágil, casi provisional.
+      </p>
+      <p>
+        La elección del material no es neutra. Estos residuos de consumo inmediato se convierten en paisaje para figuras que suelen ser tratadas como cifras, costos o daños colaterales dentro de modelos de explotación del territorio. 
+        La obra toma prestado el término externalidad de la economía para invertirlo: aquello que se excluye del cálculo reaparece aquí como imagen.
+      </p>
+      <p>
+        La baja permanencia del soporte y la técnica funciona como una condición: aceptar que esto no está hecha para durar. 
+        Aquello que queda fuera del cálculo económico reaparece brevemente en los muros, expuesto a ser removido, borrado o ignorado.
+      </p>
+      <p><strong>Acuarela</strong> – CATURDAY22.COM</p>
+    </div>
+  </div>
+
+  <footer>
+    © 2026 Caturday22 – “algo que parece anterior al arte .. y posterior a él”
+  </footer>
+
+</body>
+</html>
