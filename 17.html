@@ -2,113 +2,135 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title> Caturday 22 - 17 </title>
+  <title>"Caturday 22"</title>
   <style>
     body {
       margin: 0;
-      background-color: #000; /* fondo negro */
-      font-family: Arial, sans-serif;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background: linear-gradient(180deg, #0d0b0d 0%, #1a0f1a 100%);
       color: #fff;
-      padding: 20px;
-      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
     }
-
-    h1 {
+    .container {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+    .imagenes {
+      width: 75%;
+      overflow-y: auto;
+      padding: 1rem;
+      scrollbar-width: thin;
+      scrollbar-color: #444 #1a0f1a;
+    }
+    .imagenes::-webkit-scrollbar {
+      width: 6px;
+    }
+    .imagenes::-webkit-scrollbar-thumb {
+      background-color: #444;
+      border-radius: 3px;
+    }
+    .imagenes figure {
+      margin: 0 0 1.5rem 0;
       text-align: center;
-      font-size: 24px;
-      margin-bottom: 40px;
-      font-weight: bold;
-      letter-spacing: 0.1em;
-      text-shadow: 1px 1px 3px rgba(255,255,255,0.2);
     }
-
-    .boceto {
-      margin-bottom: 40px;
-    }
-
-    .boceto img {
-      width: 100%;
+    .imagenes img {
+      max-width: 95%;
       height: auto;
-      display: block;
-      border: 2px solid #222;
-      box-shadow: 0 0 12px rgba(255,255,255,0.2);
+      border: 1px solid #333;
+      transition: transform 0.3s ease;
     }
-
-    /* Vista en celulares */
-    @media (max-width: 600px) {
-      body {
-        padding: 10px;
+    .imagenes img:hover {
+      transform: scale(1.02);
+    }
+    .texto {
+      width: 25%;
+      overflow-y: auto;
+      padding: 2rem;
+      font-size: 12px;
+      line-height: 1.6;
+      scrollbar-width: thin;
+      scrollbar-color: #444 #0d0b0d;
+    }
+    .texto::-webkit-scrollbar {
+      width: 6px;
+    }
+    .texto::-webkit-scrollbar-thumb {
+      background-color: #444;
+      border-radius: 3px;
+    }
+    .texto h1 {
+      font-size: 22px;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    footer {
+      text-align: center;
+      color: #aaa;
+      font-size: 12px;
+      padding: 1rem;
+      border-top: 1px solid #333;
+    }
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
       }
-      h1 {
-        font-size: 20px;
-        margin-bottom: 20px;
+      .imagenes, .texto {
+        width: 100%;
+        height: auto;
       }
-      .boceto {
-        margin-bottom: 20px;
+      .texto {
+        padding: 1rem;
       }
     }
   </style>
 </head>
 <body>
 
-  <h1> Caturday 22 - 17 </h1>
+  <div class="container">
+    <!-- a la izq imagenes -->
+    <div class="imagenes">
+      <figure><img src="2217-1.jpeg" alt=" "></figure>
+      <figure><img src="2217-2.jpeg" alt=" "></figure>
+      <figure><img src="2217-3.jpeg" alt=" "></figure>
+      <figure><img src="2217-4.jpeg" alt=" "></figure>
+       <figure><img src="2217-5.jpeg" alt=" "></figure>
+       <figure><img src="2217-6.jpeg" alt=" "></figure>
+       <figure><img src="2217-7.jpeg" alt=" "></figure>
+       <figure><img src="2217-8.jpeg" alt=" "></figure>
+       <figure><img src="2217-9.jpeg" alt=" "></figure>
+  
 
-  <div class="boceto">
-    <img src="221701 (1).jpeg" alt="">
+      <!-- agregar por cada imagen que quiera poner  -->
+    </div>
+
+    <!-- a la derecha puedo escribir el texto que necesite -->
+    <div class="texto">
+      <h1>"Caturday 22 - PROPAGANDA"</h1>
+      <p>
+        Al intentar llevar una idea a su forma mas simple, una linea. Lo primero que aparecio fue mi gato.
+      </p>
+      <p>
+        Me gusta observar el paso del tiempo en los objetos y lugares que visitamos, el desgaste de la ciudad, un muro recien pintado, 
+        como cambia el color de un afiche, un sticker que comienza a despegarse o una grieta en el concreto hablan del paso de las personas.
+        Nada permanece igual, la ciudad cambia todos los dias porque quienes la habitan  también cambian.
+    
+      </p>
+      <p>
+        Por eso entiendo el espacio urbano que compartimos como un archivo vivo. Cada capa de pintura, cada intervencion, cada árbol que rompe el cemento,
+        son signos de quienes estuvieron antes y de quienes estarán.
+      </p>
+      <p><strong>Caturday sobre adhesivos, La Tierra, 2021-presente </strong> – CATURDAY22.COM</p>
+    </div>
   </div>
-  <div class="boceto">
-    <img src="221701 (2).jpeg" alt="">
-  </div>
-  <div class="boceto">
-    <img src="221701 (3).jpeg" alt="">
-  </div>
-  <div class="boceto">
-    <img src="221701 (4).jpeg" alt="">
-  </div>
-  <div class="boceto">
-    <img src="221701 (5).jpeg" alt="">
-  </div>
-  <div class="boceto">
-    <img src="221701 (6).jpeg" alt="">
-  </div>
-  <div class="boceto">
-    <img src="221701 (7).jpeg" alt="">
-  </div>
-  <div class="boceto">
-    <img src="221701 (8).jpeg" alt="">
-  </div>
-  <div class="boceto">
-    <img src="221701 (9).jpeg" alt="">
-  </div>
-  <div class="boceto">
-    <img src="221701 (10).jpeg" alt="">
-  </div>
-  <div class="boceto">
-    <img src="221701 (11).jpeg" alt="">
-  </div>
-  <div class="boceto">
-    <img src="221701 (12).jpeg" alt="">
-  </div>
-  <div class="boceto">
-    <img src="221701 (13).jpeg" alt="">
-  </div>
-  <div class="boceto">
-    <img src="221701 (14).jpeg" alt="">
-  </div>
-  <div class="boceto">
-    <img src="221701 (15).jpeg" alt="">
-  </div>
-  <div class="boceto">
-    <img src="221701 (16).jpeg" alt="">
-  </div>
-  <div class="footer">
-    © 2026 Caturday22
-  </div>
-.footer {
-  text-align: center;
-  font-size: 12px;
-  color: #aaa;
-  margin-top: 40px;
-}
+
+  <footer>
+    © 2026 Caturday22 – “algo que parece anterior al arte .. y posterior a él”
+  </footer>
+
 </body>
 </html>
