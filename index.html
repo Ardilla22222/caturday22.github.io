@@ -1,0 +1,505 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" type="image/png" href="logo.png">
+  <title>Caturday22 — Access</title>
+
+  <style>
+    :root {
+      --bg: #fff;
+      --text: #000;
+      --line: #ddd;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    main {
+      width: 100%;
+      max-width: 800px;
+      text-align: center;
+    }
+
+    .brand {
+      font-size: 12px;
+      letter-spacing: 5px;
+      margin-bottom: 45px;
+    }
+
+    h1 {
+      font-size: clamp(25px, 6vw, 44px);
+      font-weight: 900;
+      letter-spacing: -2px;
+      margin: 0 0 12px;
+    }
+
+    .subtitle {
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: #777;
+      margin-bottom: 38px;
+    }
+
+    .game-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 15px 2px;
+      font-size: 11px;
+      letter-spacing: 1px;
+      gap: 10px;
+    }
+
+    #score {
+      font-weight: bold;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .game-wrap {
+      position: relative;
+      width: 100%;
+      margin-top: 12px;
+      overflow: hidden;
+      background: #fff;
+      border-bottom: 2px solid #000;
+      touch-action: manipulation;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      image-rendering: pixelated;
+    }
+
+    #message {
+      min-height: 22px;
+      margin-top: 20px;
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+
+    #restart {
+      display: none;
+      margin: 18px auto 0;
+      padding: 13px 25px;
+      color: #fff;
+      background: #000;
+      border: 1px solid #000;
+      font-size: 11px;
+      letter-spacing: 2px;
+      cursor: pointer;
+    }
+
+    #restart:hover {
+      color: #000;
+      background: #fff;
+    }
+
+    .instructions {
+      color: #777;
+      font-size: 10px;
+      line-height: 2;
+      margin-top: 35px;
+      letter-spacing: 1px;
+    }
+
+    .signature {
+      font-size: 10px;
+      color: #aaa;
+      margin-top: 55px;
+    }
+
+    @media (max-width: 480px) {
+      .brand {
+        margin-bottom: 32px;
+      }
+
+      .subtitle {
+        margin-bottom: 28px;
+      }
+
+      .instructions {
+        margin-top: 25px;
+      }
+
+      .signature {
+        margin-top: 35px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <div class="brand">CATURDAY22.COM</div>
+
+    <h1>NO GAME, NO ACCESS.</h1>
+    <div class="subtitle">A SMALL TEST OF EXISTENCE</div>
+
+    <div class="game-info">
+      <span>CATURDAY RUNNER</span>
+      <span id="score">SCORE: 0.0 / 22.0</span>
+    </div>
+
+    <div class="game-wrap">
+      <canvas id="game" width="800" height="240"
+        aria-label="Juego de saltos de Caturday22"></canvas>
+    </div>
+
+    <div id="message" aria-live="polite">
+      SALTA LOS OBSTÁCULOS PARA ENTRAR.
+    </div>
+
+    <button id="restart" type="button">TRY AGAIN ↻</button>
+
+    <div class="instructions">
+      [ SPACE ] / [ ↑ ] TO JUMP<br>
+      MOBILE: TAP TO JUMP<br>
+      0.2 POINTS PER OBSTACLE
+    </div>
+
+    <div class="signature">
+      © 2026 CATURDAY22 — 22
+    </div>
+  </main>
+
+  <script>
+    "use strict";
+
+    // CONFIGURACIÓN
+    const TARGET_SCORE = 22;
+    const POINTS_PER_OBSTACLE = 0.2;
+    const TARGET_OBSTACLES = Math.round(
+      TARGET_SCORE / POINTS_PER_OBSTACLE
+    );
+
+    const canvas = document.getElementById("game");
+    const ctx = canvas.getContext("2d");
+    const scoreElem = document.getElementById("score");
+    const messageElem = document.getElementById("message");
+    const restartBtn = document.getElementById("restart");
+
+    const W = canvas.width;
+    const H = canvas.height;
+    const groundY = 200;
+
+    let running = true;
+    let gameOver = false;
+    let won = false;
+    let lastTime = 0;
+    let elapsed = 0;
+    let spawnIn = 1.0;
+    let obstacles = [];
+    let passed = 0;
+    let speed = 330;
+    let animationId = 0;
+
+    const cat = {
+      x: 85,
+      y: groundY - 38,
+      w: 34,
+      h: 38,
+      vy: 0,
+      gravity: 1900,
+      jumpForce: 690,
+      grounded: true
+    };
+
+    function drawCat() {
+      const x = Math.round(cat.x);
+      const y = Math.round(cat.y);
+
+      // Cuerpo
+      ctx.fillStyle = "#000";
+      ctx.fillRect(x + 4, y + 12, 25, 20);
+
+      // Cabeza
+      ctx.fillRect(x + 5, y + 2, 24, 19);
+
+      // Orejas
+      ctx.fillRect(x + 4, y - 3, 8, 9);
+      ctx.fillRect(x + 22, y - 3, 8, 9);
+
+      // Ojos
+      ctx.fillStyle = "#fff";
+      ctx.fillRect(x + 10, y + 9, 3, 3);
+      ctx.fillRect(x + 21, y + 9, 3, 3);
+
+      // Patas animadas
+      ctx.fillStyle = "#000";
+      const step = cat.grounded && running
+        ? Math.floor(elapsed * 12) % 2
+        : 0;
+
+      ctx.fillRect(x + 6, y + 30, 7, step ? 8 : 5);
+      ctx.fillRect(x + 21, y + 30, 7, step ? 5 : 8);
+
+      // Cola
+      ctx.fillRect(x - 4, y + 19, 7, 4);
+      ctx.fillRect(x - 7, y + 14, 4, 8);
+    }
+
+    function drawObstacle(o) {
+      ctx.fillStyle = "#000";
+
+      if (o.type === 0) {
+        // Cactus pixelado
+        ctx.fillRect(o.x + 8, groundY - 32, 13, 32);
+        ctx.fillRect(o.x, groundY - 23, 9, 7);
+        ctx.fillRect(o.x, groundY - 29, 6, 12);
+        ctx.fillRect(o.x + 19, groundY - 17, 10, 6);
+        ctx.fillRect(o.x + 23, groundY - 25, 6, 14);
+      } else {
+        // Obstáculo abstracto
+        ctx.fillRect(o.x, groundY - 25, 25, 25);
+        ctx.fillRect(o.x + 5, groundY - 32, 15, 7);
+        ctx.clearRect(o.x + 6, groundY - 19, 4, 4);
+      }
+    }
+
+    function drawScene() {
+      ctx.clearRect(0, 0, W, H);
+
+      // Suelo
+      ctx.fillStyle = "#000";
+      ctx.fillRect(0, groundY, W, 2);
+
+      // Marcas del suelo
+      ctx.fillStyle = "#aaa";
+      for (let i = 0; i < 20; i++) {
+        const x = ((i * 57 - elapsed * speed * 0.45) % W + W) % W;
+        ctx.fillRect(x, groundY + 10, 12, 1);
+      }
+
+      drawCat();
+      obstacles.forEach(drawObstacle);
+
+      // Decoración discreta
+      ctx.fillStyle = "#ddd";
+      ctx.font = "10px monospace";
+      ctx.fillText("22", W - 28, 22);
+    }
+
+    function updateScore() {
+      scoreElem.textContent =
+        "SCORE: " + (passed * POINTS_PER_OBSTACLE).toFixed(1)
+        + " / 22.0";
+    }
+
+    function jump() {
+      if (won) return;
+
+      if (gameOver) {
+        resetGame();
+        return;
+      }
+
+      if (cat.grounded) {
+        cat.vy = -cat.jumpForce;
+        cat.grounded = false;
+      }
+    }
+
+    function endGame() {
+      running = false;
+      gameOver = true;
+      cancelAnimationFrame(animationId);
+
+      messageElem.textContent = "GAME OVER — ACCESS DENIED.";
+      restartBtn.style.display = "block";
+
+      drawScene();
+
+      ctx.fillStyle = "rgba(255,255,255,0.90)";
+      ctx.fillRect(0, 65, W, 75);
+
+      ctx.fillStyle = "#000";
+      ctx.textAlign = "center";
+      ctx.font = "bold 24px monospace";
+      ctx.fillText("GAME OVER", W / 2, 98);
+
+      ctx.font = "12px monospace";
+      ctx.fillText("OBSTACLES: " + passed, W / 2, 122);
+      ctx.textAlign = "left";
+    }
+
+    function winGame() {
+      won = true;
+      running = false;
+      cancelAnimationFrame(animationId);
+
+      updateScore();
+      messageElem.textContent = "ACCESS GRANTED. WELCOME TO CATURDAY22.";
+      restartBtn.style.display = "none";
+
+      drawScene();
+
+      ctx.fillStyle = "rgba(255,255,255,0.94)";
+      ctx.fillRect(0, 55, W, 100);
+
+      ctx.fillStyle = "#000";
+      ctx.textAlign = "center";
+      ctx.font = "bold 26px monospace";
+      ctx.fillText("ACCESS GRANTED", W / 2, 96);
+
+      ctx.font = "12px monospace";
+      ctx.fillText("WELCOME TO CATURDAY22", W / 2, 122);
+      ctx.textAlign = "left";
+
+      // Redirigir al índice original de la web
+      setTimeout(() => {
+        window.location.href = "web.html";
+      }, 1600);
+    }
+
+    function resetGame() {
+      cancelAnimationFrame(animationId);
+
+      running = true;
+      gameOver = false;
+      won = false;
+      lastTime = 0;
+      elapsed = 0;
+      spawnIn = 1.0;
+      obstacles = [];
+      passed = 0;
+      speed = 330;
+
+      cat.y = groundY - cat.h;
+      cat.vy = 0;
+      cat.grounded = true;
+
+      restartBtn.style.display = "none";
+      messageElem.textContent = "SALTA LOS OBSTÁCULOS PARA ENTRAR.";
+
+      updateScore();
+      drawScene();
+
+      animationId = requestAnimationFrame(loop);
+    }
+
+    function loop(timestamp) {
+      if (!running) return;
+
+      if (!lastTime) lastTime = timestamp;
+
+      // Limitar delta para evitar saltos tras perder un frame
+      const dt = Math.min((timestamp - lastTime) / 1000, 0.035);
+      lastTime = timestamp;
+
+      elapsed += dt;
+      speed = Math.min(330 + elapsed * 3, 490);
+
+      // Física del salto
+      cat.vy += cat.gravity * dt;
+      cat.y += cat.vy * dt;
+
+      if (cat.y >= groundY - cat.h) {
+        cat.y = groundY - cat.h;
+        cat.vy = 0;
+        cat.grounded = true;
+      }
+
+      // Generación de obstáculos
+      spawnIn -= dt;
+
+      if (spawnIn <= 0) {
+        const last = obstacles[obstacles.length - 1];
+
+        // Mantener distancia suficiente entre obstáculos
+        if (!last || last.x < W - 230) {
+          obstacles.push({
+            x: W + 10,
+            w: 29,
+            h: 32,
+            type: Math.random() < 0.65 ? 0 : 1,
+            scored: false
+          });
+
+          spawnIn = 0.95 + Math.random() * 0.65;
+        } else {
+          spawnIn = 0.15;
+        }
+      }
+
+      for (const o of obstacles) {
+        o.x -= speed * dt;
+
+        // Cada obstáculo superado suma exactamente 0.2
+        if (!o.scored && o.x + o.w < cat.x) {
+          o.scored = true;
+          passed++;
+          updateScore();
+
+          if (passed >= TARGET_OBSTACLES) {
+            winGame();
+            return;
+          }
+        }
+
+        // Colisión con margen pequeño para un juego más justo
+        const marginX = 5;
+        const marginY = 4;
+
+        const hit =
+          cat.x + marginX < o.x + o.w &&
+          cat.x + cat.w - marginX > o.x &&
+          cat.y + marginY < groundY &&
+          cat.y + cat.h - marginY > groundY - o.h &&
+          cat.y + cat.h > groundY - o.h;
+
+        if (hit) {
+          endGame();
+          return;
+        }
+      }
+
+      obstacles = obstacles.filter(o => o.x + o.w > -10);
+
+      drawScene();
+      animationId = requestAnimationFrame(loop);
+    }
+
+    // Teclado
+    document.addEventListener("keydown", event => {
+      if (event.code === "Space" || event.code === "ArrowUp") {
+        event.preventDefault();
+        if (!event.repeat) jump();
+      }
+    });
+
+    // Pantallas táctiles
+    canvas.addEventListener("pointerdown", event => {
+      event.preventDefault();
+      jump();
+    });
+
+    restartBtn.addEventListener("click", resetGame);
+
+    // Iniciar automáticamente
+    updateScore();
+    drawScene();
+    animationId = requestAnimationFrame(loop);
+  </script>
+</body>
+</html>
