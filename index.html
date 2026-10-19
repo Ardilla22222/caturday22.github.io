@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -15,9 +14,7 @@
       --line: #ddd;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -44,10 +41,13 @@
     }
 
     h1 {
-      font-size: clamp(25px, 6vw, 44px);
+      font-size: clamp(20px, 4vw, 38px);
+      line-height: 1.2;
       font-weight: 900;
-      letter-spacing: -2px;
-      margin: 0 0 12px;
+      letter-spacing: -1px;
+      margin: 0 auto 12px;
+      max-width: 720px;
+      text-transform: uppercase;
     }
 
     .subtitle {
@@ -55,6 +55,7 @@
       letter-spacing: 2px;
       color: #777;
       margin-bottom: 38px;
+      text-transform: uppercase;
     }
 
     .game-info {
@@ -72,6 +73,7 @@
     #score {
       font-weight: bold;
       font-variant-numeric: tabular-nums;
+      white-space: nowrap;
     }
 
     .game-wrap {
@@ -130,21 +132,11 @@
     }
 
     @media (max-width: 480px) {
-      .brand {
-        margin-bottom: 32px;
-      }
-
-      .subtitle {
-        margin-bottom: 28px;
-      }
-
-      .instructions {
-        margin-top: 25px;
-      }
-
-      .signature {
-        margin-top: 35px;
-      }
+      .brand { margin-bottom: 32px; }
+      .subtitle { margin-bottom: 28px; }
+      .instructions { margin-top: 25px; }
+      .signature { margin-top: 35px; }
+      body { padding: 18px 14px; }
     }
   </style>
 </head>
@@ -153,12 +145,12 @@
   <main>
     <div class="brand">CATURDAY22.COM</div>
 
-    <h1>NO GAME, NO ACCESS.</h1>
-    <div class="subtitle">A SMALL TEST OF EXISTENCE</div>
+    <h1>POR FAVOR, INGRESE SU CLAVE DE ACCESO 22</h1>
+    <div class="subtitle">CONFIRMA TU EXISTENCIA</div>
 
     <div class="game-info">
       <span>CATURDAY RUNNER</span>
-      <span id="score">SCORE: 0.0 / 22.0</span>
+      <span id="score">SCORE: 0.0</span>
     </div>
 
     <div class="game-wrap">
@@ -186,12 +178,10 @@
   <script>
     "use strict";
 
-    // CONFIGURACIÓN
+    // CONFIGURACIÓN DEL JUEGO
     const TARGET_SCORE = 22;
     const POINTS_PER_OBSTACLE = 0.2;
-    const TARGET_OBSTACLES = Math.round(
-      TARGET_SCORE / POINTS_PER_OBSTACLE
-    );
+    const TARGET_OBSTACLES = Math.round(TARGET_SCORE / POINTS_PER_OBSTACLE);
 
     const canvas = document.getElementById("game");
     const ctx = canvas.getContext("2d");
@@ -225,15 +215,50 @@
       grounded: true
     };
 
+    // Fondo de ciudad: edificios y ventanas en pixel art.
+    function drawCity() {
+      ctx.fillStyle = "#f5f5f5";
+
+      const buildingWidths = [62, 86, 55, 78, 68, 92, 58, 76, 64, 88];
+      let cursor = 0;
+      let i = 0;
+
+      while (cursor < W + 100) {
+        const bw = buildingWidths[i % buildingWidths.length];
+        const bh = 38 + ((i * 29) % 66);
+        const offset = (elapsed * 18) % 80;
+        const bx = cursor - offset;
+
+        ctx.fillStyle = "#f4f4f4";
+        ctx.fillRect(bx, groundY - bh - 12, bw - 3, bh);
+
+        ctx.fillStyle = "#d2d2d2";
+        for (let wx = bx + 8; wx < bx + bw - 8; wx += 15) {
+          for (let wy = groundY - bh; wy < groundY - 18; wy += 15) {
+            ctx.fillRect(wx, wy, 5, 6);
+          }
+        }
+
+        cursor += bw;
+        i++;
+      }
+
+      // Faroles
+      ctx.fillStyle = "#c4c4c4";
+      for (let i = 0; i < 5; i++) {
+        const x = ((i * 190 - elapsed * 55) % (W + 100) + W + 100) % (W + 100) - 30;
+        ctx.fillRect(x, groundY - 66, 3, 66);
+        ctx.fillRect(x - 8, groundY - 68, 20, 3);
+      }
+    }
+
     function drawCat() {
       const x = Math.round(cat.x);
       const y = Math.round(cat.y);
 
-      // Cuerpo
       ctx.fillStyle = "#000";
+      // Cuerpo y cabeza
       ctx.fillRect(x + 4, y + 12, 25, 20);
-
-      // Cabeza
       ctx.fillRect(x + 5, y + 2, 24, 19);
 
       // Orejas
@@ -247,10 +272,7 @@
 
       // Patas animadas
       ctx.fillStyle = "#000";
-      const step = cat.grounded && running
-        ? Math.floor(elapsed * 12) % 2
-        : 0;
-
+      const step = cat.grounded && running ? Math.floor(elapsed * 12) % 2 : 0;
       ctx.fillRect(x + 6, y + 30, 7, step ? 8 : 5);
       ctx.fillRect(x + 21, y + 30, 7, step ? 5 : 8);
 
@@ -260,50 +282,98 @@
     }
 
     function drawObstacle(o) {
+      const x = Math.round(o.x);
+      const y = groundY;
       ctx.fillStyle = "#000";
 
       if (o.type === 0) {
-        // Cactus pixelado
-        ctx.fillRect(o.x + 8, groundY - 32, 13, 32);
-        ctx.fillRect(o.x, groundY - 23, 9, 7);
-        ctx.fillRect(o.x, groundY - 29, 6, 12);
-        ctx.fillRect(o.x + 19, groundY - 17, 10, 6);
-        ctx.fillRect(o.x + 23, groundY - 25, 6, 14);
+        // AUTO DE POLICÍA
+        ctx.fillRect(x, y - 20, 42, 14);
+        ctx.fillRect(x + 7, y - 27, 25, 10);
+
+        // Baliza
+        ctx.fillRect(x + 17, y - 31, 7, 4);
+
+        // Ventanas
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(x + 11, y - 24, 8, 5);
+        ctx.fillRect(x + 22, y - 24, 7, 5);
+
+        // Insignia
+        ctx.fillStyle = "#000";
+        ctx.fillRect(x + 19, y - 17, 5, 4);
+
+        // Ruedas
+        ctx.fillRect(x + 6, y - 8, 9, 8);
+        ctx.fillRect(x + 30, y - 8, 9, 8);
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(x + 9, y - 5, 3, 3);
+        ctx.fillRect(x + 33, y - 5, 3, 3);
+
+      } else if (o.type === 1) {
+        // PEATÓN PIXELADO
+        ctx.fillRect(x + 8, y - 35, 11, 11); // cabeza
+        ctx.fillRect(x + 6, y - 24, 15, 14); // torso
+        ctx.fillRect(x + 1, y - 22, 6, 12); // brazo
+        ctx.fillRect(x + 20, y - 22, 6, 10); // brazo
+        ctx.fillRect(x + 7, y - 11, 6, 11); // pierna
+        ctx.fillRect(x + 15, y - 11, 6, 11); // pierna
+
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(x + 11, y - 31, 2, 2);
+        ctx.fillRect(x + 16, y - 31, 2, 2);
+
+      } else if (o.type === 2) {
+        // SEÑAL DE TRÁNSITO
+        ctx.fillRect(x + 13, y - 9, 5, 9); // poste
+        ctx.fillRect(x, y - 43, 31, 24); // panel
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(x + 4, y - 39, 23, 16);
+        ctx.fillStyle = "#000";
+        ctx.fillRect(x + 13, y - 36, 4, 8);
+        ctx.fillRect(x + 13, y - 26, 4, 3);
+
       } else {
-        // Obstáculo abstracto
-        ctx.fillRect(o.x, groundY - 25, 25, 25);
-        ctx.fillRect(o.x + 5, groundY - 32, 15, 7);
-        ctx.clearRect(o.x + 6, groundY - 19, 4, 4);
+        // BARRICADA URBANA
+        ctx.fillRect(x, y - 23, 38, 13);
+        ctx.fillRect(x + 4, y - 10, 5, 10);
+        ctx.fillRect(x + 29, y - 10, 5, 10);
+        ctx.fillStyle = "#fff";
+        ctx.fillRect(x + 7, y - 21, 6, 9);
+        ctx.fillRect(x + 21, y - 21, 6, 9);
       }
     }
 
     function drawScene() {
       ctx.clearRect(0, 0, W, H);
 
-      // Suelo
+      drawCity();
+
+      // Calle y línea de suelo
       ctx.fillStyle = "#000";
       ctx.fillRect(0, groundY, W, 2);
 
-      // Marcas del suelo
+      // Marcas de la calle
       ctx.fillStyle = "#aaa";
       for (let i = 0; i < 20; i++) {
         const x = ((i * 57 - elapsed * speed * 0.45) % W + W) % W;
         ctx.fillRect(x, groundY + 10, 12, 1);
       }
 
-      drawCat();
+      // Obstáculos y personaje
       obstacles.forEach(drawObstacle);
+      drawCat();
 
-      // Decoración discreta
+      // Número discreto de la firma
       ctx.fillStyle = "#ddd";
       ctx.font = "10px monospace";
       ctx.fillText("22", W - 28, 22);
     }
 
     function updateScore() {
+      // No mostrar el máximo necesario.
       scoreElem.textContent =
-        "SCORE: " + (passed * POINTS_PER_OBSTACLE).toFixed(1)
-        + " / 22.0";
+        "SCORE: " + (passed * POINTS_PER_OBSTACLE).toFixed(1);
     }
 
     function jump() {
@@ -337,7 +407,6 @@
       ctx.textAlign = "center";
       ctx.font = "bold 24px monospace";
       ctx.fillText("GAME OVER", W / 2, 98);
-
       ctx.font = "12px monospace";
       ctx.fillText("OBSTACLES: " + passed, W / 2, 122);
       ctx.textAlign = "left";
@@ -361,12 +430,11 @@
       ctx.textAlign = "center";
       ctx.font = "bold 26px monospace";
       ctx.fillText("ACCESS GRANTED", W / 2, 96);
-
       ctx.font = "12px monospace";
       ctx.fillText("WELCOME TO CATURDAY22", W / 2, 122);
       ctx.textAlign = "left";
 
-      // Redirigir al índice original de la web
+      // El index original debe guardarse como web.html.
       setTimeout(() => {
         window.location.href = "web.html";
       }, 1600);
@@ -394,7 +462,6 @@
 
       updateScore();
       drawScene();
-
       animationId = requestAnimationFrame(loop);
     }
 
@@ -402,8 +469,6 @@
       if (!running) return;
 
       if (!lastTime) lastTime = timestamp;
-
-      // Limitar delta para evitar saltos tras perder un frame
       const dt = Math.min((timestamp - lastTime) / 1000, 0.035);
       lastTime = timestamp;
 
@@ -420,19 +485,22 @@
         cat.grounded = true;
       }
 
-      // Generación de obstáculos
+      // Generar obstáculos urbanos con ancho y altura correctos.
       spawnIn -= dt;
 
       if (spawnIn <= 0) {
         const last = obstacles[obstacles.length - 1];
 
-        // Mantener distancia suficiente entre obstáculos
         if (!last || last.x < W - 230) {
+          const type = Math.floor(Math.random() * 4);
+          const widths = [42, 27, 31, 38];
+          const heights = [31, 35, 43, 23];
+
           obstacles.push({
             x: W + 10,
-            w: 29,
-            h: 32,
-            type: Math.random() < 0.65 ? 0 : 1,
+            w: widths[type],
+            h: heights[type],
+            type,
             scored: false
           });
 
@@ -445,7 +513,7 @@
       for (const o of obstacles) {
         o.x -= speed * dt;
 
-        // Cada obstáculo superado suma exactamente 0.2
+        // Cada obstáculo superado suma exactamente 0.2 puntos.
         if (!o.scored && o.x + o.w < cat.x) {
           o.scored = true;
           passed++;
@@ -457,16 +525,17 @@
           }
         }
 
-        // Colisión con margen pequeño para un juego más justo
+        // Colisiones: la altura corresponde al obstáculo dibujado.
         const marginX = 5;
         const marginY = 4;
+        const obstacleTop = groundY - o.h;
 
         const hit =
           cat.x + marginX < o.x + o.w &&
           cat.x + cat.w - marginX > o.x &&
           cat.y + marginY < groundY &&
-          cat.y + cat.h - marginY > groundY - o.h &&
-          cat.y + cat.h > groundY - o.h;
+          cat.y + cat.h - marginY > obstacleTop &&
+          cat.y + cat.h > obstacleTop;
 
         if (hit) {
           endGame();
@@ -480,7 +549,7 @@
       animationId = requestAnimationFrame(loop);
     }
 
-    // Teclado
+    // Teclado: espacio o flecha arriba.
     document.addEventListener("keydown", event => {
       if (event.code === "Space" || event.code === "ArrowUp") {
         event.preventDefault();
@@ -488,7 +557,7 @@
       }
     });
 
-    // Pantallas táctiles
+    // Móvil: tocar el área del juego para saltar.
     canvas.addEventListener("pointerdown", event => {
       event.preventDefault();
       jump();
@@ -496,7 +565,7 @@
 
     restartBtn.addEventListener("click", resetGame);
 
-    // Iniciar automáticamente
+    // Inicio
     updateScore();
     drawScene();
     animationId = requestAnimationFrame(loop);
